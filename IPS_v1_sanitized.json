@@ -72,6 +72,18 @@ filter {
         
     
     }
+	    #If it contains "Group" in the message
+		
+    else if "Group \= " in [message]{
+    
+		grok {
+            match => [
+                "message", "Group \= %{GroupIP:IPORHOST}\, IP \= {IPORHOST}\, %{groupmsg:GREEDYDATA}",
+				
+            ]
+        
+        }
+    }
     
     #For actual messages that can be alerted on
     else if "Impact" in [message] and "Classification" in [message] {
